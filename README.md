@@ -13,3 +13,8 @@ https://github.com/docker-library/docker
     * [`latest`, `18.06.3`](https://gitlab.com/jitesoft/dockerfiles/docker/blob/master/Dockerfile)
 * `registry.gitlab.com/jitesoft/dockerfiles/docker/dind`
     * [`latest`, `18.06.3`](https://gitlab.com/jitesoft/dockerfiles/docker/blob/master/Dind/Dockerfile)
+
+
+### Image labels
+
+This image follows the [Jitesoft image label specification 1.0.0](https://gitlab.com/snippets/1866155).
