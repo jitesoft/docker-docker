@@ -1,5 +1,6 @@
 ARG DOCKER_VERSION
 FROM registry.gitlab.com/jitesoft/dockerfiles/docker:${DOCKER_VERSION}
+LABEL com.jitesoft.project.registry.uri="registry.gitlab.com/jitesoft/dockerfiles/docker/dind"
 
 COPY dind /usr/bin/
 COPY entrypoint.sh /usr/bin/entrypoint.sh
