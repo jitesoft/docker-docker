@@ -6,6 +6,7 @@ variables:
   DOCKER_VERSION: 18.06.3
 services:
   - docker:dind
+image: docker:latest
 
 build:docker:
   stage: base
@@ -34,7 +35,7 @@ build:dind:
     - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
     - echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin
   script:
-    - cd dind
+    - cd Dind
     - docker build -t ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
     - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${IMG_NAME}:${DOCKER_VERSION}-dind
     - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${IMG_NAME}:dind
