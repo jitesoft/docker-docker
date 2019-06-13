@@ -1,0 +1,51 @@
+stages:
+  - base
+  - dind
+
+variables:
+  DOCKER_VERSION: 18.06.3
+services:
+  - docker:dind
+
+build:docker:
+  stage: base
+  before_script:
+    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
+    - echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin
+  script:
+    - docker build -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
+    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} ${IMG_NAME}:${DOCKER_VERSION}
+    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} ${IMG_NAME}:latest
+    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}:${DOCKER_VERSION}
+    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}:latest
+    - docker push ${IMG_NAME}:${DOCKER_VERSION}
+    - docker push ${IMG_NAME}:latest
+    - docker push ${CI_REGISTRY_IMAGE}:${DOCKER_VERSION}
+    - docker push ${CI_REGISTRY_IMAGE}:latest
+  tags:
+    - jitesoft
+  only:
+    refs:
+      - master
+
+build:dind:
+  stage: dind
+  before_script:
+    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
+    - echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin
+  script:
+    - cd dind
+    - docker build -t ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
+    - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${IMG_NAME}:${DOCKER_VERSION}-dind
+    - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${IMG_NAME}:dind
+    - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION}
+    - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/dind:latest
+    - docker push ${IMG_NAME}:${DOCKER_VERSION}-dind
+    - docker push ${IMG_NAME}:dind
+    - docker push ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION}
+    - docker push ${CI_REGISTRY_IMAGE}/dind:latest
+  tags:
+    - jitesoft
+  only:
+    refs:
+      - master
