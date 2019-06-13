@@ -1,7 +1,7 @@
 ARG DOCKER_VERSION
 FROM registry.gitlab.com/jitesoft/dockerfiles/docker:${DOCKER_VERSION}
 
-COPY dind.sh /usr/local/bin/dind
+COPY dind /usr/local/bin/
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN apk add --no-cache git btrfs-progs e2fsprogs e2fsprogs-extra iptables xfsprogs xz pigz zfs \

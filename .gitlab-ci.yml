@@ -6,7 +6,7 @@ variables:
   DOCKER_VERSION: 18.06.3
 services:
   - docker:dind
-image: docker:latest
+image: registry.gitlab.com/jitesoft/dockerfiles/docker:latest
 
 build:docker:
   stage: base
