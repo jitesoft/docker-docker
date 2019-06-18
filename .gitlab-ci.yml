@@ -3,7 +3,7 @@ stages:
   - dind
 
 variables:
-  DOCKER_VERSION: 18.06.3
+  DOCKER_VERSION: 18.09.6
 services:
   - registry.gitlab.com/jitesoft/dockerfiles/docker/dind:latest
 image: registry.gitlab.com/jitesoft/dockerfiles/docker:latest
