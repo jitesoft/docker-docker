@@ -4,6 +4,7 @@ stages:
 
 variables:
   DOCKER_VERSION: 18.09.6
+  DOCKER_BUILDKIT: 1
 services:
   - registry.gitlab.com/jitesoft/dockerfiles/docker/dind:latest
 image: registry.gitlab.com/jitesoft/dockerfiles/docker:latest
