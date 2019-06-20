@@ -1,6 +1,10 @@
+include:
+  - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/container_scan.yml
+
 stages:
   - base
   - dind
+  - scan
 
 variables:
   DOCKER_VERSION: 18.09.6
@@ -8,20 +12,6 @@ variables:
 services:
   - registry.gitlab.com/jitesoft/dockerfiles/docker/dind:18.09.6
 image: registry.gitlab.com/jitesoft/dockerfiles/docker:18.09.6
-
-build:
-  stage: base
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  script:
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:test
-  tags:
-    - jitesoft
-  only:
-    refs:
-      - master
 
 build:docker:
   stage: base
@@ -57,3 +47,17 @@ build:dind:
   only:
     refs:
       - master
+
+scan:docker:
+  extends: .container_scanning
+  dependencies:
+    - build:docker
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:${DOCKER_VERSION}"
+
+scan:dind:
+  extends: .container_scanning
+  dependencies:
+    - build:dind
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION}"
