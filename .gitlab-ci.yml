@@ -20,7 +20,8 @@ build:
   tags:
     - jitesoft
   only:
-    - master
+    refs:
+      - master
 
 build:docker:
   stage: base
