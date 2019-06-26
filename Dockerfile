@@ -11,7 +11,7 @@ LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>" \
 
 ENV DOCKER_VERSION=${DOCKER_VERSION}
 
-COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY ./entrypoint.sh /usr/local/bin/
 
 RUN apk add --no-cache ca-certificates git openssh-client \
  && [[ ! -e /etc/nsswitch.conf ]] && echo 'hosts: files dns' > /etc/nsswitch.conf \
@@ -19,8 +19,11 @@ RUN apk add --no-cache ca-certificates git openssh-client \
  && tar -xzf docker.tgz --strip-components 1 -C /usr/local/bin \
  && chmod +x /usr/local/bin/docker \
  && chmod +x /usr/local/bin/dockerd \
+ && chmod +x /usr/local/bin/entrypoint.sh \
  && rm docker.tgz \
  && docker --version \
  && dockerd --version
+ && rm docker.tgz
 
 ENTRYPOINT ["entrypoint.sh"]
+CMD ["sh"]
