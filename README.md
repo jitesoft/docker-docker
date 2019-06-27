@@ -9,10 +9,12 @@ https://github.com/docker-library/docker
 
 ## Tags:
 
-* `registry.gitlab.com/jitesoft/dockerfiles/docker`
-    * [`latest`, `18.06.3`](https://gitlab.com/jitesoft/dockerfiles/docker/blob/master/Dockerfile)
-* `registry.gitlab.com/jitesoft/dockerfiles/docker/dind`
-    * [`latest`, `18.06.3`](https://gitlab.com/jitesoft/dockerfiles/docker/blob/master/Dind/Dockerfile)
+* [`registry.gitlab.com/jitesoft/dockerfiles/docker`](https://gitlab.com/jitesoft/dockerfiles/docker/blob/master/Dockerfile)
+    * `latest`, `18.09.6`
+    * `18.06.3`
+* [`registry.gitlab.com/jitesoft/dockerfiles/docker/dind`](https://gitlab.com/jitesoft/dockerfiles/docker/blob/master/Dind/Dockerfile)
+    * `latest`, `18.09.6`
+    * `18.06.3`
 
 ### Image labels
 
