@@ -22,7 +22,6 @@ if [[ -d /sys/kernel/security ]] && ! mountpoint -q /sys/kernel/security; then
     }
 fi
 
-# Mount /tmp (conditionally)
 if ! mountpoint -q /tmp; then
     mount -t tmpfs none /tmp
 fi
