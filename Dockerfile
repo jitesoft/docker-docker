@@ -22,8 +22,7 @@ RUN apk add --no-cache ca-certificates git openssh-client \
  && chmod +x /usr/local/bin/entrypoint.sh \
  && rm docker.tgz \
  && docker --version \
- && dockerd --version \
- && rm docker.tgz
+ && dockerd --version
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["sh"]
