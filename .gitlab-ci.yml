@@ -3,11 +3,11 @@ stages:
   - dind
 
 variables:
-  DOCKER_VERSION: 18.09.6
+  DOCKER_VERSION: 19.03.1
   DOCKER_BUILDKIT: 1
 services:
-  - registry.gitlab.com/jitesoft/dockerfiles/docker/dind:18.09.6
-image: registry.gitlab.com/jitesoft/dockerfiles/docker:18.09.6
+  - registry.gitlab.com/jitesoft/dockerfiles/docker/dind:18.09.8
+image: registry.gitlab.com/jitesoft/dockerfiles/docker:18.09.8
 
 build:docker:
   stage: base
