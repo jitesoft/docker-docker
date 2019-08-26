@@ -1,6 +1,7 @@
 stages:
   - base
-  - extra
+  - buildx
+  - dind
 
 variables:
   DOCKER_VERSION: 19.03.1
@@ -25,25 +26,9 @@ build:docker:
     refs:
       - master
 
-build:dind:
-  stage: extra
-  before_script:
-    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
-  script:
-    - cd Dind
-    - docker build -t ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
-    - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION}
-    - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/dind:latest
-    - docker push ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION}
-    - docker push ${CI_REGISTRY_IMAGE}/dind:latest
-  tags:
-    - jitesoft
-  only:
-    refs:
-      - master
 
 build:buildx:
-  stage: extra
+  stage: buildx
   before_script:
     - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
     - apk add --no-cache curl wget grep
@@ -55,6 +40,40 @@ build:buildx:
     - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x ${CI_REGISTRY_IMAGE}/buildx:latest
     - docker push ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION}
     - docker push ${CI_REGISTRY_IMAGE}/buildx:latest
+  tags:
+    - jitesoft
+  only:
+    refs:
+      - master
+
+build:buildx:dind:
+  stage: dind
+  before_script:
+    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
+  script:
+    - cd Dind-Buildx/Dockerfile
+    - docker build -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-dind-x --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
+    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-dind-x ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION}-dind
+    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-dind-x ${CI_REGISTRY_IMAGE}/buildx:latest-dind
+    - docker push ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION}-dind
+    - docker push ${CI_REGISTRY_IMAGE}/buildx:latest-dind
+  tags:
+    - jitesoft
+  only:
+    refs:
+      - master
+
+build:dind:
+  stage: dind
+  before_script:
+    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
+  script:
+    - cd Dind
+    - docker build -t ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
+    - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION}
+    - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/dind:latest
+    - docker push ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION}
+    - docker push ${CI_REGISTRY_IMAGE}/dind:latest
   tags:
     - jitesoft
   only:
