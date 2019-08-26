@@ -9,7 +9,8 @@ LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>" \
       com.jitesoft.project.registry.uri="registry.gitlab.com/jitesoft/dockerfiles/docker" \
       com.jitesoft.app.docker.version="${DOCKER_VERSION}"
 
-ENV DOCKER_VERSION=${DOCKER_VERSION}
+ENV DOCKER_VERSION=${DOCKER_VERSION} \
+    DOCKER_CLI_EXPERIMENTAL="enabled"
 
 COPY ./entrypoint.sh /usr/local/bin/
 
@@ -20,6 +21,10 @@ RUN apk add --no-cache ca-certificates git openssh-client \
  && chmod +x /usr/local/bin/docker \
  && chmod +x /usr/local/bin/dockerd \
  && chmod +x /usr/local/bin/entrypoint.sh \
+ && mkdir -p /etc/docker \
+ && echo '{ "experimental": true }' > /etc/docker/daemon.json \
+ && mkdir -p /root/.docker \
+ && echo '{ "experimental": "enabled" }' > /root/.docker/config.json \
  && rm docker.tgz \
  && docker --version \
  && dockerd --version
