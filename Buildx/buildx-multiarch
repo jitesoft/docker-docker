@@ -4,7 +4,7 @@
     "Nodes": [
         {
             "Name": "buildx-multiarch0",
-            "Endpoint": "unix:///var/run/docker.sock",
+            "Endpoint": "tcp://gitlab-dind:2375",
             "Platforms": [
                 {
                     "architecture": "amd64",

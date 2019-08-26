@@ -20,6 +20,8 @@ https://github.com/docker-library/docker
     * `18.09.6`
     * `18.06.3`
 
+The `Buildx` image is not intended for public usage.
+
 ### Image labels
 
 This image follows the [Jitesoft image label specification 1.0.0](https://gitlab.com/snippets/1866155).
