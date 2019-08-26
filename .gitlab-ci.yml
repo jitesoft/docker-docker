@@ -49,7 +49,7 @@ build:buildx:
   before_script:
     - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
   script:
-    - docker build -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
+    - docker build -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x --build-arg DOCKER_VERSION=${DOCKER_VERSION} -f Buildx/Dockerfile .
     - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION}
     - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x ${CI_REGISTRY_IMAGE}/buildx:latest
     - docker push ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION}
