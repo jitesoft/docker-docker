@@ -51,7 +51,7 @@ build:buildx:dind:
   before_script:
     - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
   script:
-    - cd Dind-Buildx/Dockerfile
+    - cd Dind-Buildx
     - docker build -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-dind-x --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
     - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-dind-x ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION}-dind
     - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-dind-x ${CI_REGISTRY_IMAGE}/buildx:latest-dind
