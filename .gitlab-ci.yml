@@ -11,11 +11,7 @@ image: registry.gitlab.com/jitesoft/dockerfiles/docker:18.09.8
 
 build:docker:
   stage: base
-  before_script:
-    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
   script:
-    - docker --version
-    - dockerd --version
     - docker build -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
     - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}:${DOCKER_VERSION}
     - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}:latest
@@ -29,8 +25,6 @@ build:docker:
 
 build:dind:
   stage: dind
-  before_script:
-    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
   script:
     - cd Dind
     - docker build -t ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
@@ -38,6 +32,20 @@ build:dind:
     - docker tag ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/dind:latest
     - docker push ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION}
     - docker push ${CI_REGISTRY_IMAGE}/dind:latest
+  tags:
+    - jitesoft
+  only:
+    refs:
+      - master
+
+build:buildx:
+  stage: dind
+  script:
+    - docker build -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x --build-arg DOCKER_VERSION=${DOCKER_VERSION} .
+    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION}
+    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x ${CI_REGISTRY_IMAGE}/buildx:latest
+    - docker push ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION}
+    - docker push ${CI_REGISTRY_IMAGE}/buildx:latest
   tags:
     - jitesoft
   only:

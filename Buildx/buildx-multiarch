@@ -1,0 +1,35 @@
+{
+    "Name": "buildx-multiarch",
+    "Driver": "docker-container",
+    "Nodes": [
+        {
+            "Name": "buildx-multiarch0",
+            "Endpoint": "unix:///var/run/docker.sock",
+            "Platforms": [
+                {
+                    "architecture": "amd64",
+                    "os": "linux"
+                },
+                {
+                    "architecture": "arm64",
+                    "os": "linux"
+                },
+                {
+                    "architecture": "arm",
+                    "os": "linux",
+                    "variant": "v8"
+                },
+                {
+                    "architecture": "arm",
+                    "os": "linux",
+                    "variant": "v7"
+                },
+                {
+                    "architecture": "amd64",
+                    "os": "windows"
+                }
+            ],
+            "Flags": null
+        }
+    ]
+}
