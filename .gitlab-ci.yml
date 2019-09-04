@@ -3,14 +3,12 @@ stages:
   - extra
 
 variables:
-  DOCKER_VERSION: 19.03.1
+  DOCKER_VERSION: 19.03.2
   DOCKER_BUILDKIT: 1
 image: registry.gitlab.com/jitesoft/dockerfiles/docker:latest
 
 build:docker:
   stage: base
-  before_script:
-    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
   script:
     - docker --version
     - dockerd --version
@@ -25,30 +23,8 @@ build:docker:
     refs:
       - master
 
-
-build:buildx:
-  stage: extra
-  before_script:
-    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
-    - apk add --no-cache curl wget grep
-  script:
-    - BUILDX_VERSION=$(wget -qO- https://github.com/docker/buildx/releases/latest | grep -oP '(?<=releases\/tag\/)(.*?)(?=\&)' | awk 'NR==1{print $1}')
-    - wget -O docker-buildx https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64
-    - docker build -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x --build-arg DOCKER_VERSION=${DOCKER_VERSION} --label "com.jitesoft.app.buildx.version=${BUILDX_VERSION}" -f Buildx/Dockerfile .
-    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION}
-    - docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}-x ${CI_REGISTRY_IMAGE}/buildx:latest
-    - docker push ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION}
-    - docker push ${CI_REGISTRY_IMAGE}/buildx:latest
-  tags:
-    - jitesoft
-  only:
-    refs:
-      - master
-
 build:dind:
   stage: extra
-  before_script:
-    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
   script:
     - cd Dind
     - docker build -t ${CI_REGISTRY_IMAGE}/dind:${CI_COMMIT_SHA} --build-arg DOCKER_VERSION=${DOCKER_VERSION} .

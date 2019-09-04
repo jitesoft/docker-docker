@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env ash
 # File taken and slightly modified from https://github.com/docker-library/docker/blob/9633df3ae8a88dfed9ba7f92e8a911249bbe4ec0/18.09/dind/dockerd-entrypoint.sh
 set -e
 
