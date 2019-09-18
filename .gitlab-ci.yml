@@ -38,7 +38,7 @@ build:dind:
   stage: extra
   script:
     - cd Dind
-    - docker buildx build --platform ${ARCHITECTURES}--progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:latest .
+    - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:latest .
   tags: [ jitesoft, buildx, amd64, arm7, arm64 ]
   only:
     refs:
