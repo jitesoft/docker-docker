@@ -8,7 +8,9 @@ stages:
 
 variables:
   DOCKER_VERSION: 19.03.2
-  ARCHITECTURES: "linux/amd64,linux/arm64,linux/arm/v7,linux/ppc64le,linux/s390x"
+  CE_VERSION: 18.06.3-ce
+  ARCHITECTURES: "linux/amd64,linux/arm64,linux/arm/v7"
+  CE_ARCHITECTURES: "linux/amd64,linux/arm64,linux/arm/v7,linux/ppc64le,linux/s390x"
 
 image: registry.gitlab.com/jitesoft/dockerfiles/docker/buildx:latest
 
@@ -16,6 +18,15 @@ build:docker:
   stage: base
   script:
     - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}:latest .
+  tags: [ jitesoft, buildx, amd64, arm7, arm64 ]
+  only:
+    refs:
+      - master
+
+build:docker:ce:
+  stage: base
+  script:
+    - docker buildx build --platform ${CE_ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ${CI_REGISTRY_IMAGE}:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}:ce .
   tags: [ jitesoft, buildx, amd64, arm7, arm64, ppc64le, s390x ]
   only:
     refs:
@@ -27,7 +38,19 @@ build:dind:
   stage: extra
   script:
     - cd Dind
-    - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:latest .
+    - docker buildx build --platform ${ARCHITECTURES}--progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:latest .
+  tags: [ jitesoft, buildx, amd64, arm7, arm64 ]
+  only:
+    refs:
+      - master
+
+build:dind:ce:
+  needs:
+    - build:docker:ce
+  stage: extra
+  script:
+    - cd Dind
+    - docker buildx build --platform ${CE_ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:ce .
   tags: [ jitesoft, buildx, amd64, arm7, arm64, ppc64le, s390x ]
   only:
     refs:
@@ -43,7 +66,7 @@ build:buildx:
   script:
     - cd BuildX
     - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg BUILDX_VERSION=${BUILDX_VERSION} --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/buildx:latest .
-  tags: [ jitesoft, buildx, amd64, arm7, arm64, ppc64le, s390x ]
+  tags: [ jitesoft, buildx, amd64, arm7, arm64 ]
   only:
     refs:
       - master
@@ -62,6 +85,22 @@ scan:dind:
   extends: .container_scanning
   variables:
     SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}/dind:latest"
+    GIT_STRATEGY: none
+
+scan:ce:
+  needs:
+    - build:docker
+  extends: .container_scanning
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:ce"
+    GIT_STRATEGY: none
+
+scan:dind:ce:
+  needs:
+    - build:dind:ce
+  extends: .container_scanning
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}/dind:ce"
     GIT_STRATEGY: none
 
 scan:buildx:
