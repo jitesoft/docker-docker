@@ -39,7 +39,7 @@ build:dind:
   script:
     - cd Dind
     - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:latest .
-  tags: [ jitesoft, buildx, amd64, arm7, arm64 ]
+  tags: [ jitesoft, buildx, amd64, arm64 ]
   only:
     refs:
       - master
@@ -51,7 +51,7 @@ build:dind:ce:
   script:
     - cd Dind
     - docker buildx build --platform ${CE_ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:ce .
-  tags: [ jitesoft, buildx, amd64, arm7, arm64, ppc64le, s390x ]
+  tags: [ jitesoft, buildx, amd64, arm64, ppc64le, s390x ]
   only:
     refs:
       - master
