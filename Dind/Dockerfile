@@ -10,6 +10,8 @@ RUN apk add --no-cache git btrfs-progs e2fsprogs e2fsprogs-extra iptables xfspro
  && adduser -S -G dockeremap dockeremap \
  && echo 'dockeremap:165536:65536' >> /etc/subuid \
  && echo 'dockeremap:165536:65536' >> /etc/subgid \
+ && mkdir -p /etc/docker \
+ && echo '{ "experimental": true }' > /etc/docker/daemon.json \
  && chmod +x /usr/local/bin/dind \
  && chmod +x /usr/local/bin/entrypoint-dind
 
