@@ -19,10 +19,10 @@ RUN apk add --no-cache ca-certificates git openssh-client \
  && ARCH=$( \
     ${TARGETPLATFORM} = "linux/amd64"   && echo "x86_64"  || \
     ${TARGETPLATFORM} = "linux/arm64"   && echo "aarch64" || \
-    ${TARGETPLATFORM} = "linux/arm/v6"  && echo "armel"   || \
     ${TARGETPLATFORM} = "linux/arm/v7"  && echo "armhf"   || \
     ${TARGETPLATFORM} = "linux/ppc64le" && echo "ppc64le" || \
     ${TARGETPLATFORM} = "linux/s390x"   && echo "s390x"   || \
+    ${TARGETPLATFORM} = "linux/arm/v6"  && echo "Architecture not supported"; exit 1; || \
     ${TARGETPLATFORM} = "linux/386"     && echo "Architecture not supported."; exit 1; \
   ) \
  && wget -O docker.tgz "https://download.docker.com/linux/static/edge/${ARCH}/docker-${DOCKER_VERSION}.tgz" \
