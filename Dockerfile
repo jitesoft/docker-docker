@@ -21,19 +21,13 @@ RUN apk add --no-cache ca-certificates git openssh-client \
     case "${TARGETPLATFORM}" in \
       "linux/amd64")            \
         echo "x86_64"           \
-        ;;                 \
+        ;;                      \
       "linux/arm64")            \
         echo "aarch64"          \
-        ;;                 \
+        ;;                      \
       "linux/arm/v7")           \
         echo "armhf"            \
-        ;;                 \
-      "linux/ppc64le")          \
-        echo "ppc64le"          \
-        ;;                 \
-      "linux/s390x")            \
-        echo "s390x"            \
-        ;;                 \
+        ;;                      \
     esac                        \
  )                              \
  && echo "Architecture: ${TARGETPLATFORM} - ${ARCH}" \
