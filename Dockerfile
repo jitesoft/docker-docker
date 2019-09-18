@@ -11,6 +11,7 @@ LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>" \
 
 ENV DOCKER_CLI_EXPERIMENTAL="enabled"
 ARG DOCKER_VERSION
+ARG TARGETPLATFORM
 
 COPY ./entrypoint.sh /usr/local/bin/
 
