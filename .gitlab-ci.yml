@@ -15,7 +15,7 @@ image: registry.gitlab.com/jitesoft/dockerfiles/docker/buildx:latest
 build:docker:
   stage: base
   script:
-    - docker buildx build --platforms ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}:latest .
+    - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}:latest .
   tags: [ jitesoft, buildx, amd64, arm7, arm64, ppc64le, s390x ]
   only:
     refs:
@@ -27,7 +27,7 @@ build:dind:
   stage: extra
   script:
     - cd Dind
-    - docker buildx build --platforms ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:latest .
+    - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:latest .
   tags: [ jitesoft, buildx, amd64, arm7, arm64, ppc64le, s390x ]
   only:
     refs:
@@ -42,7 +42,7 @@ build:buildx:
     - BUILDX_VERSION=$(wget -qO- https://github.com/docker/buildx/releases | grep -oP '(?<=releases\/tag\/)(.*?)(?=\">)' | awk 'NR==1{print $1}' | sed -r 's/v//g')
   script:
     - cd BuildX
-    - docker buildx build --platforms ${ARCHITECTURES} --progress plain --build-arg BUILDX_VERSION=${BUILDX_VERSION} --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/buildx:latest .
+    - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg BUILDX_VERSION=${BUILDX_VERSION} --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/buildx:latest .
   tags: [ jitesoft, buildx, amd64, arm7, arm64, ppc64le, s390x ]
   only:
     refs:
