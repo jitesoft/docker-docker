@@ -33,7 +33,7 @@ build:dind:
     refs:
       - master
 
-build:experimental:
+build:buildx:
   needs:
     - build:docker
   stage: extra
@@ -64,7 +64,7 @@ scan:dind:
     SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}/dind:latest"
     GIT_STRATEGY: none
 
-scan:experimental:
+scan:buildx:
   needs:
     - build:buildx
   extends: .container_scanning
