@@ -17,11 +17,11 @@ COPY ./entrypoint.sh /usr/local/bin/
 RUN apk add --no-cache ca-certificates git openssh-client \
  && [[ ! -e /etc/nsswitch.conf ]] && echo 'hosts: files dns' > /etc/nsswitch.conf \
  && ARCH=$( \
-    (${TARGETPLATFORM} == "linux/amd64"   && echo "x86_64")  || \
-    (${TARGETPLATFORM} == "linux/arm64"   && echo "aarch64") || \
-    (${TARGETPLATFORM} == "linux/arm/v7"  && echo "armhf"  ) || \
-    (${TARGETPLATFORM} == "linux/ppc64le" && echo "ppc64le") || \
-    (${TARGETPLATFORM} == "linux/s390x"   && echo "s390x"  )    \
+    ([ ${TARGETPLATFORM} == "linux/amd64"   ] && echo "x86_64")  || \
+    ([ ${TARGETPLATFORM} == "linux/arm64"   ] && echo "aarch64") || \
+    ([ ${TARGETPLATFORM} == "linux/arm/v7"  ] && echo "armhf"  ) || \
+    ([ ${TARGETPLATFORM} == "linux/ppc64le" ] && echo "ppc64le") || \
+    ([ ${TARGETPLATFORM} == "linux/s390x"   ] && echo "s390x"  )    \
   ) \
  && wget -O docker.tgz "https://download.docker.com/linux/static/edge/${ARCH}/docker-${DOCKER_VERSION}.tgz" \
  && tar -xzf docker.tgz --strip-components 1 -C /usr/local/bin \
