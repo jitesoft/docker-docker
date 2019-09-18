@@ -26,7 +26,7 @@ build:docker:
 build:docker:ce:
   stage: base
   script:
-    - docker buildx build --platform ${CE_ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ${CI_REGISTRY_IMAGE}:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}:ce -t jitesoft/docker:ce -t jitesoft/docker:${DOCKER_VERSION} .
+    - docker buildx build --platform ${CE_ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ${CI_REGISTRY_IMAGE}:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}:ce -t jitesoft/docker:ce -t jitesoft/docker:${CE_VERSION} .
   tags: [ jitesoft, buildx, amd64, arm7, arm64, ppc64le, s390x ]
   only:
     refs:
