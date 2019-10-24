@@ -40,8 +40,6 @@ and also a `buildx` image. The `buildx` image contains the docker cli-plugin `bu
 This repository and the files in it are (in case other is not stated) released under the MIT license.  
 Docker contains a multitude of licenses and you can read them here: https://www.docker.com/legal/components-licenses
 
-
-
 ### Image labels
 
 This image follows the [Jitesoft image label specification 1.0.0](https://gitlab.com/snippets/1866155).
