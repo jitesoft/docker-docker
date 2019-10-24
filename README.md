@@ -16,24 +16,24 @@ and also a `buildx` image. The `buildx` image contains the docker cli-plugin `bu
 ### Docker Hub
 
 * [`jitesoft/docker`](https://gitlab.com/jitesoft/dockerfiles/docker/blob/master/Dockerfile)
-    * `latest`, `19.03.2` (amd64, arm64, arm7)
+    * `latest`, `19.03.4` (amd64, arm64, arm7)
     * `ce`, `18.06.3-ce`  (amd64, arm64, arm7, ppc64le, s390x)
 * [`jitesoft/docker`](https://gitlab.com/jitesoft/dockerfiles/docker/blob/master/Dind/Dockerfile)
-    * `latest-dind`, `19.03.2-dind` (amd64, arm64)
+    * `latest-dind`, `19.03.4-dind` (amd64, arm64)
     * `ce-dind`, `18.06.3-ce-dind`  (amd64, arm64, armv7, ppc64le, s390x)
 * [`jitesoft/docker`](https://gitlab.com/jitesoft/dockerfiles/docker/master/BuildX/Dockerfile)
-    * `latest-buildx`, `19.03.2-buildx` (amd64, arm64, armv7)
+    * `latest-buildx`, `19.03.4-buildx` (amd64, arm64, armv7)
 
 ### GitLab
 
 * [`registry.gitlab.com/jitesoft/dockerfiles/docker`](https://gitlab.com/jitesoft/dockerfiles/docker/blob/master/Dockerfile)
-    * `latest`, `19.03.2` (amd64, arm64, arm7)
+    * `latest`, `19.03.4` (amd64, arm64, arm7)
     * `ce`, `18.06.3-ce`  (amd64, arm64, arm7, ppc64le, s390x)
 * [`registry.gitlab.com/jitesoft/dockerfiles/docker/dind`](https://gitlab.com/jitesoft/dockerfiles/docker/blob/master/Dind/Dockerfile)
-    * `latest`, `19.03.2` (amd64, arm64)
+    * `latest`, `19.03.4` (amd64, arm64)
     * `ce`, `18.06.3-ce`  (amd64, arm64, armv7, ppc64le, s390x)
 * [`registry.gitlab.com/jitesoft/dockerfiles/docker/buildx`](https://gitlab.com/jitesoft/dockerfiles/docker/master/BuildX/Dockerfile)
-    * `latest`, `19.03.2` (amd64, arm64, armv7)
+    * `latest`, `19.03.4` (amd64, arm64, armv7)
 
 ### Licenses
 
