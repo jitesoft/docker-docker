@@ -18,7 +18,7 @@ build:docker:
   stage: base
   script:
     - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}:latest -t jitesoft/docker:latest -t jitesoft/docker:${DOCKER_VERSION} .
-  tags: [ jitesoft, buildx, amd64, arm7, arm64 ]
+  tags: [ jitesoft, buildx, protected ]
   only:
     refs:
       - master
@@ -27,7 +27,7 @@ build:docker:ce:
   stage: base
   script:
     - docker buildx build --platform ${CE_ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ${CI_REGISTRY_IMAGE}:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}:ce -t jitesoft/docker:ce -t jitesoft/docker:${CE_VERSION} .
-  tags: [ jitesoft, buildx, amd64, arm7, arm64, ppc64le, s390x ]
+  tags: [ jitesoft, buildx, protected ]
   only:
     refs:
       - master
@@ -39,7 +39,7 @@ build:dind:
   script:
     - cd Dind
     - docker buildx build --platform linux/amd64,linux/arm64 --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:latest -t jitesoft/docker:latest-dind -t jitesoft/docker:${DOCKER_VERSION}-dind .
-  tags: [ jitesoft, buildx, amd64, arm64 ]
+  tags: [ jitesoft, buildx, protected ]
   only:
     refs:
       - master
@@ -51,7 +51,7 @@ build:dind:ce:
   script:
     - cd Dind
     - docker buildx build --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:ce -t jitesoft/docker:${CE_VERSION}-dind -t jitesoft/docker:ce-dind .
-  tags: [ jitesoft, buildx, amd64, arm64, ppc64le, s390x ]
+  tags: [ jitesoft, buildx, protected ]
   only:
     refs:
       - master
@@ -66,7 +66,7 @@ build:buildx:
   script:
     - cd BuildX
     - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg BUILDX_VERSION=${BUILDX_VERSION} --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/buildx:latest -t jitesoft/docker:${DOCKER_VERSION}-buildx -t jitesoft/docker:latest-buildx .
-  tags: [ jitesoft, buildx, amd64, arm7, arm64 ]
+  tags: [ jitesoft, buildx, protected ]
   only:
     refs:
       - master
