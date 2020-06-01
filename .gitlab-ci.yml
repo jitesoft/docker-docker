@@ -21,7 +21,7 @@ download:version:
   image: registry.gitlab.com/jitesoft/dockerfiles/misc
   script:
     - VERSION="$(wget -qO- https://github.com/docker/cli/releases | grep -oP '(?<=releases\/tag\/)(.*?)(?=\">)' | awk 'NR==1{print $1}' | head -1)"
-    - echo $VERSION > version.txt
+    - echo ${VERSION#?} > version.txt
   artifacts:
     paths:
       - version.txt
