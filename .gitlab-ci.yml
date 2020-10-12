@@ -16,6 +16,8 @@ variables:
 
 image: registry.gitlab.com/jitesoft/dockerfiles/docker/buildx:latest
 
+# TODO: Rewrite this!
+
 download:version:
   stage: version
   image: registry.gitlab.com/jitesoft/dockerfiles/misc
@@ -33,7 +35,7 @@ build:docker:
   stage: base
   script:
     - DOCKER_VERSION=$(cat version.txt)
-    - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}:latest -t jitesoft/docker:latest -t jitesoft/docker:${DOCKER_VERSION} .
+    - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ghcr.io/jitesoft/docker:${DOCKER_VERSION} -t ghcr.io/jitesoft/docker:latest -t ${CI_REGISTRY_IMAGE}:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}:latest -t jitesoft/docker:latest -t jitesoft/docker:${DOCKER_VERSION} .
   tags: [ jitesoft, buildx, protected ]
   only:
     refs:
@@ -42,7 +44,7 @@ build:docker:
 build:docker:ce:
   stage: base
   script:
-    - docker buildx build --platform ${CE_ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ${CI_REGISTRY_IMAGE}:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}:ce -t jitesoft/docker:ce -t jitesoft/docker:${CE_VERSION} .
+    - docker buildx build --platform ${CE_ARCHITECTURES} --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ghcr.io/jitesoft/docker:${CE_VERSION} -t ghcr.io/jitesoft/docker:ce -t ${CI_REGISTRY_IMAGE}:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}:ce -t jitesoft/docker:ce -t jitesoft/docker:${CE_VERSION} .
   tags: [ jitesoft, buildx, protected ]
   only:
     refs:
@@ -56,7 +58,7 @@ build:dind:
   script:
     - DOCKER_VERSION=$(cat version.txt)
     - cd Dind
-    - docker buildx build --platform linux/amd64,linux/arm64 --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:latest -t jitesoft/docker:latest-dind -t jitesoft/docker:${DOCKER_VERSION}-dind .
+    - docker buildx build --platform linux/amd64,linux/arm64 --progress plain --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ghcr.io/jitesoft/docker:${DOCKER_VERSION}-dind -t ghcr.io/jitesoft/docker:dind  -t ${CI_REGISTRY_IMAGE}/dind:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:latest -t jitesoft/docker:latest-dind -t jitesoft/docker:${DOCKER_VERSION}-dind .
   tags: [ jitesoft, buildx, protected ]
   only:
     refs:
@@ -68,7 +70,7 @@ build:dind:ce:
   stage: extra
   script:
     - cd Dind
-    - docker buildx build --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ${CI_REGISTRY_IMAGE}/dind:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:ce -t jitesoft/docker:${CE_VERSION}-dind -t jitesoft/docker:ce-dind .
+    - docker buildx build --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x --progress plain --build-arg DOCKER_VERSION=${CE_VERSION} --push -t ghcr.io/jitesoft/docker:${CE_VERSION}-dind -t ghcr.io/jitesoft/docker:ce-dind -t ${CI_REGISTRY_IMAGE}/dind:${CE_VERSION} -t ${CI_REGISTRY_IMAGE}/dind:ce -t jitesoft/docker:${CE_VERSION}-dind -t jitesoft/docker:ce-dind .
   tags: [ jitesoft, buildx, protected ]
   only:
     refs:
@@ -85,7 +87,7 @@ build:buildx:
   script:
     - DOCKER_VERSION=$(cat version.txt)
     - cd BuildX
-    - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg BUILDX_VERSION=${BUILDX_VERSION} --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/buildx:latest -t jitesoft/docker:${DOCKER_VERSION}-buildx -t jitesoft/docker:latest-buildx .
+    - docker buildx build --platform ${ARCHITECTURES} --progress plain --build-arg BUILDX_VERSION=${BUILDX_VERSION} --build-arg DOCKER_VERSION=${DOCKER_VERSION} --push -t ghcr.io/jitesoft/docker:${DOCKER_VERSION}-buildx -t ghcr.io/jitesoft/docker:buildx -t ${CI_REGISTRY_IMAGE}/buildx:${DOCKER_VERSION} -t ${CI_REGISTRY_IMAGE}/buildx:latest -t jitesoft/docker:${DOCKER_VERSION}-buildx -t jitesoft/docker:latest-buildx .
   tags: [ jitesoft, buildx, protected ]
   only:
     refs:
