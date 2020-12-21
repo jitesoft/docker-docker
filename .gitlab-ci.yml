@@ -9,7 +9,7 @@ stages:
   - scan
 
 variables:
-  DOCKER_VERSION: 19.03.5
+  DOCKER_VERSION: 19.03.9
   CE_VERSION: 18.06.3-ce
   ARCHITECTURES: "linux/amd64,linux/arm64"
   CE_ARCHITECTURES: "linux/amd64,linux/arm64,linux/arm/v7,linux/ppc64le,linux/s390x"
