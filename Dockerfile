@@ -38,7 +38,7 @@ RUN apk add --no-cache ca-certificates git openssh-client \
  )                              \
  && echo "Architecture: ${TARGETPLATFORM} - ${ARCH}" \
  && cat /etc/apk/arch \
- && wget -O docker.tgz "https://download.docker.com/linux/static/edge/${ARCH}/docker-${DOCKER_VERSION}.tgz" \
+ && wget -O docker.tgz "https://download.docker.com/linux/static/stable/${ARCH}/docker-${DOCKER_VERSION}.tgz" \
  && tar -xzf docker.tgz --strip-components 1 -C /usr/local/bin \
  && chmod +x /usr/local/bin/docker \
  && chmod +x /usr/local/bin/dockerd \
