@@ -14,7 +14,7 @@ variables:
   ARCHITECTURES: "linux/amd64,linux/arm64"
   CE_ARCHITECTURES: "linux/amd64,linux/arm64,linux/arm/v7,linux/ppc64le,linux/s390x"
 
-image: registry.gitlab.com/jitesoft/dockerfiles/docker/buildx:latest
+image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
 
 # TODO: Rewrite this!
 

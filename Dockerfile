@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/jitesoft/dockerfiles/alpine:latest
+FROM registry.gitlab.com/jitesoft/dockerfiles/alpine:3.14
 ARG DOCKER_VERSION
 LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>" \
       maintainer.org="Jitesoft" \
