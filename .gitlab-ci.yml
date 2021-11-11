@@ -22,7 +22,7 @@ download:version:
   stage: version
   image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
   script:
-    - VERSION="$(wget -qO- https://api.github.com/repos/docker/cli/tags | jq -r '.[0].tag_name' | awk 'NR==1{print $1}')"
+    - VERSION="$(wget -qO- https://api.github.com/repos/docker/cli/tags | jq -r '.[0].name' | awk 'NR==1{print $1}')"
     - echo ${VERSION#?} > version.txt
   artifacts:
     paths:
